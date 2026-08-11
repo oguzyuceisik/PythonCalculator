@@ -1,58 +1,59 @@
-print("!!Hesap Makinesine Hoş Geldiniz!!")
+print("!!Welcome to my CALCULATOR!!")
 
-def islem(sayi1,sayi2,isaret):
-    if isaret =="+":
-        sonuc = sayi1+sayi2
-        return sonuc
-    elif isaret =="-":
-        sonuc = sayi1-sayi2
-        return sonuc
-    elif isaret =="*":
-        sonuc = sayi1*sayi2
-        return sonuc
-    elif isaret =="/":
-        sonuc = sayi1/sayi2
-        return sonuc
+def operation(num1,num2,op):
+    if op =="+":
+        answer = num1+num2
+        return answer
+    elif op =="-":
+        answer = num1-num2
+        return answer
+    elif op =="*":
+        answer = num1*num2
+        return answer
+    elif op =="/":
+        answer = num1/num2
+        return answer
     else:
-        return "Geçersiz İşlem girildi"
+        return "Invalid Operation"
 
 
-def hesap():
-    icerik = []
-    devammi = True
-    while devammi:
-        sayi = input("Sayı giriniz(Sonlandırmak için " + "'son'" +" yazınız): ")
-        if sayi != "son":
-            sayi = float(sayi)
-            icerik.append(sayi)
-        else:
-            icerik.pop()
-            devammi = False
+def calculation():
+    content = []
+    cont = True
+    while cont:
+        number = input("Enter a number: ")
+        try:
+            content.append(float(number))
+        except ValueError:
+            print("Invalid Input!")
+            return
+        ops = input("Enter an operation(+,-,*,/), type 'end' to finish: ")
+        if ops == "+" or ops =="-" or ops == "*" or ops =="/":
+            content.append(ops)
+        elif ops.lower() == "end":
+            cont = False
             break
-        islems = input("İslemi Giriniz: ")
-        if islems == "+" or islems =="-" or islems == "*" or islems =="/":
-            icerik.append(islems)
         else:
-            print("Geçersiz Değer Girildi")
-            devammi = False
-    while len(icerik)!=1:
-        while "*" in icerik:
-            sira = icerik.index("*")
-            sonuc = islem(icerik[sira - 1],icerik[sira + 1],icerik[sira])
-            icerik[sira -1 : sira +2] = [sonuc]
-        while "/" in icerik:
-            sira = icerik.index("/")
-            sonuc = islem(icerik[sira - 1],icerik[sira + 1],icerik[sira])
-            icerik[sira -1 : sira +2] = [sonuc]
-        while "+" in icerik:
-            sira = icerik.index("+")
-            sonuc = islem(icerik[sira - 1],icerik[sira + 1],icerik[sira])
-            icerik[sira -1 : sira +2] = [sonuc]
-        while "-" in icerik:
-            sira = icerik.index("-")
-            sonuc = islem(icerik[sira - 1],icerik[sira + 1],icerik[sira])
-            icerik[sira -1 : sira +2] = [sonuc]
+            print("Invalid Input")
+            cont = False
+    while len(content)!=1:
+        while "*" in content:
+            where = content.index("*")
+            answer = operation(content[where - 1],content[where + 1],content[where])
+            content[where -1 : where +2] = [answer]
+        while "/" in content:
+            where = content.index("/")
+            answer = operation(content[where - 1],content[where + 1],content[where])
+            content[where -1 : where +2] = [answer]
+        while "+" in content:
+            where = content.index("+")
+            answer = operation(content[where - 1],content[where + 1],content[where])
+            content[where -1 : where +2] = [answer]
+        while "-" in content:
+            where = content.index("-")
+            answer = operation(content[where - 1],content[where + 1],content[where])
+            content[where -1 : where +2] = [answer]
     else:
-        print(f"Sonucunuz: {icerik}")
+        print(f"Your answer: {content}")
 
-hesap()
+calculation()
